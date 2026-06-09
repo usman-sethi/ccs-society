@@ -75,23 +75,21 @@ export default function Home() {
               transition={{ delay: 1.2, duration: 0.8 }}
               className="flex flex-col sm:flex-row gap-6 justify-center w-full sm:w-auto relative z-50 pointer-events-auto transform-style-3d"
             >
-              <Link to="/signup" className="outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 py-0">
-                <MagneticButton
-                  className="group relative inline-flex items-center justify-center gap-3 w-full px-10 py-5 text-base font-medium text-[#0A0A0A] bg-[#EDEDED] rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.2)]"
-                >
-                  <span className="relative z-10 flex items-center gap-2 font-semibold">
-                    Join the Society <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                  </span>
-                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                </MagneticButton>
-              </Link>
-              <Link to="/events" className="outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 py-0">
-                <MagneticButton
-                  className="inline-flex items-center justify-center w-full px-10 py-5 rounded-full bg-white/[0.02] text-[#EDEDED] text-base font-medium hover:bg-white/[0.06] transition-colors border border-white/[0.08] backdrop-blur-xl"
-                >
-                  <span className="relative z-10">Explore Events</span>
-                </MagneticButton>
-              </Link>
+              <MagneticButton
+                onClick={() => navigate('/signup')}
+                className="group relative inline-flex items-center justify-center gap-3 w-full px-10 py-5 text-base font-medium text-[#0A0A0A] bg-[#EDEDED] rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.2)] outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+              >
+                <span className="relative z-10 flex items-center gap-2 font-semibold">
+                  Join the Society <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </span>
+                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+              </MagneticButton>
+              <MagneticButton
+                onClick={() => navigate('/events')}
+                className="inline-flex items-center justify-center w-full px-10 py-5 rounded-full bg-white/[0.02] text-[#EDEDED] text-base font-medium hover:bg-white/[0.06] transition-colors border border-white/[0.08] backdrop-blur-xl outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+              >
+                <span className="relative z-10">Explore Events</span>
+              </MagneticButton>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -268,16 +266,15 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="relative z-50 pointer-events-auto px-4"
           >
-            <Link to="/signup">
-              <MagneticButton
-                className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-lg font-bold text-[#0A0A0A] bg-white rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_60px_rgba(255,255,255,0.15)]"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  Get Started Now <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </span>
-                <div className="absolute inset-0 bg-indigo-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </MagneticButton>
-            </Link>
+            <MagneticButton
+              onClick={() => navigate('/signup')}
+              className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-lg font-bold text-[#0A0A0A] bg-white rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_60px_rgba(255,255,255,0.15)]"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Get Started Now <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </span>
+              <div className="absolute inset-0 bg-indigo-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </MagneticButton>
           </motion.div>
         </div>
       </section>

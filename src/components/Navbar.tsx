@@ -153,14 +153,16 @@ const Navbar = () => {
                 >
                   Log in
                 </Link>
-                <Link to="/signup">
                   <MagneticButton
+                    onClick={() => {
+                      setIsOpen(false);
+                      navigate('/signup');
+                    }}
                     className="group relative inline-flex items-center justify-center gap-2 px-6 py-2.5 text-[13px] font-medium text-white bg-white/[0.05] border border-white/[0.1] rounded-full overflow-hidden transition-all hover:bg-white/[0.1] hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <span className="relative z-10">Sign up</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </MagneticButton>
-                </Link>
               </div>
             )}
           </div>
