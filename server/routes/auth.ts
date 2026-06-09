@@ -7,7 +7,7 @@ const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key_for_dev';
 
 const getAdminEmails = () => {
-  const emails = process.env.ADMIN_EMAILS || 'surveyuniofpesh@gmail.com';
+  const emails = process.env.ADMIN_EMAILS || 'surveyuniofpesh@gmail.com, paradox@test.com';
   return emails.split(',').map((e) => e.trim().toLowerCase());
 };
 

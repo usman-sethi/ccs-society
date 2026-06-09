@@ -7,9 +7,9 @@ import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../lib/auth';
 
 export default function Signup() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('Paradox');
+  const [email, setEmail] = useState('paradox@test.com');
+  const [password, setPassword] = useState('16Paradox2006;');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -27,10 +27,13 @@ export default function Signup() {
       });
 
       let data;
+      let rawText = '';
       try {
-        data = await response.json();
+        rawText = await response.text();
+        data = JSON.parse(rawText);
       } catch (err) {
-        throw new Error('Invalid JSON response from server');
+        console.error('Raw server response:', rawText);
+        throw new Error('Server error: ' + rawText.substring(0, 100));
       }
 
       if (!response.ok) {

@@ -5,6 +5,13 @@ import { fileURLToPath } from 'url';
 import compression from 'compression';
 import { connectDB } from './server/db';
 
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection:', reason);
+});
+
 // Import API routers
 import authRouter from './server/routes/auth';
 import eventsRouter from './server/routes/events';
@@ -29,9 +36,9 @@ app.use(async (req, res, next) => {
   try {
     await connectDB();
     next();
-  } catch (error) {
+  } catch (error: any) {
     console.error('DB Connection Error:', error);
-    res.status(500).json({ error: 'Database connection failed' });
+    res.status(500).json({ success: false, message: 'Database connection failed', error: error.message || 'Unknown DB error' });
   }
 });
 
@@ -47,6 +54,12 @@ app.use('/api/developers', developersRouter);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
+});
+
+// Global API error handler
+app.use('/api', (err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('API Error:', err);
+  res.status(500).json({ success: false, message: 'Internal Server Error', error: err.message || 'Unknown error' });
 });
 
 async function startLocalServer() {

@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, Terminal, ChevronRight } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../lib/auth';
 import MagneticButton from './MagneticButton';
 
@@ -50,7 +50,7 @@ const BrandLogo = () => {
   );
 };
 
-export default function Navbar() {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -290,4 +290,6 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-}
+};
+
+export default React.memo(Navbar);
