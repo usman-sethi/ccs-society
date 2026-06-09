@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Users, X, Search, ChevronRight, Code, Cpu, Globe, Database, Shield, Zap } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
@@ -47,6 +48,17 @@ export default function Teams() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (selectedTeam) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedTeam]);
 
   const filteredTeams = useMemo(() => {
     return teams.filter((team) => {
@@ -170,89 +182,92 @@ export default function Teams() {
       </div>
 
       {/* Modal for Team Members */}
-      <AnimatePresence>
-        {selectedTeam && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#0A0A0A]/80 backdrop-blur-xl"
-            onClick={() => setSelectedTeam(null)}
-          >
+      {createPortal(
+        <AnimatePresence>
+          {selectedTeam && (
             <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-[#0A0A0A] border border-white/[0.08] rounded-3xl p-8 sm:p-12 max-w-5xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl shadow-black"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#0A0A0A]/80 backdrop-blur-xl"
+              onClick={() => setSelectedTeam(null)}
             >
-              <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-indigo-500/10 to-transparent pointer-events-none rounded-t-3xl" />
-              
-              <div className="flex justify-between items-start mb-12 relative z-10">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-[#888888] mb-6 text-xs font-medium tracking-wide uppercase shadow-sm backdrop-blur-md">
-                    Team Roster
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-[#0A0A0A] border border-white/[0.08] rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 max-w-5xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl shadow-black flex flex-col"
+              >
+                <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-indigo-500/10 to-transparent pointer-events-none rounded-t-3xl" />
+                
+                <div className="flex justify-between items-start mb-8 md:mb-12 relative z-10 shrink-0">
+                  <div className="pr-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-[#888888] mb-4 md:mb-6 text-[10px] sm:text-xs font-medium tracking-wide uppercase shadow-sm backdrop-blur-md">
+                      Team Roster
+                    </div>
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tighter text-[#EDEDED] leading-[1.1]">
+                      {selectedTeam.team_name}
+                    </h2>
                   </div>
-                  <h2 className="text-4xl sm:text-5xl font-bold tracking-tighter text-[#EDEDED] leading-[1.1]">
-                    {selectedTeam.team_name}
-                  </h2>
+                  <button
+                    onClick={() => setSelectedTeam(null)}
+                    className="p-2 sm:p-2.5 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] transition-all duration-300 group outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 shrink-0 inline-flex items-center justify-center mt-1 sm:mt-0"
+                  >
+                    <X className="w-5 h-5 text-[#888888] group-hover:text-[#EDEDED] group-hover:rotate-90 transition-all duration-300" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setSelectedTeam(null)}
-                  className="p-2 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] transition-all duration-300 group outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-                >
-                  <X className="w-5 h-5 text-[#888888] group-hover:text-[#EDEDED] group-hover:rotate-90 transition-all duration-300" />
-                </button>
-              </div>
 
-              {teamMembers.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-                  {teamMembers.map((member: any, idx: number) => (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                      key={member._id || member.id} 
-                      className="group flex flex-col items-center text-center p-8 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all duration-500"
-                    >
-                      <div className="relative mb-6">
-                        <div className="absolute inset-0 bg-indigo-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        {member.image ? (
-                          <img
-                            src={member.image}
-                            alt={member.name}
-                            className="relative w-24 h-24 rounded-full object-cover border border-white/[0.1] group-hover:border-indigo-400/50 transition-colors duration-500"
-                            referrerPolicy="no-referrer"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="relative w-24 h-24 rounded-full bg-white/[0.05] border border-white/[0.1] group-hover:border-indigo-400/50 flex items-center justify-center transition-colors duration-500 shadow-inner">
-                            <Users className="w-8 h-8 text-[#888888] group-hover:text-indigo-400 transition-colors duration-500" />
-                          </div>
+                {teamMembers.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 relative z-10 shrink-0 pb-4">
+                    {teamMembers.map((member: any, idx: number) => (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                        key={member._id || member.id} 
+                        className="group flex flex-col items-center text-center p-6 md:p-8 rounded-2xl md:rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all duration-500"
+                      >
+                        <div className="relative mb-5 md:mb-6">
+                          <div className="absolute inset-0 bg-indigo-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          {member.image ? (
+                            <img
+                              src={member.image}
+                              alt={member.name}
+                              className="relative w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border border-white/[0.1] group-hover:border-indigo-400/50 transition-colors duration-500"
+                              referrerPolicy="no-referrer"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/[0.05] border border-white/[0.1] group-hover:border-indigo-400/50 flex items-center justify-center transition-colors duration-500 shadow-inner">
+                              <Users className="w-6 h-6 md:w-8 md:h-8 text-[#888888] group-hover:text-indigo-400 transition-colors duration-500" />
+                            </div>
+                          )}
+                        </div>
+                        <h4 className="font-semibold text-base md:text-lg tracking-tight mb-1 text-[#EDEDED]">{member.name}</h4>
+                        <p className="text-indigo-400/80 text-xs font-medium tracking-wide uppercase mb-3">{member.role}</p>
+                        {member.bio && (
+                          <p className="text-[#888888] text-[13px] leading-relaxed font-light">{member.bio}</p>
                         )}
-                      </div>
-                      <h4 className="font-semibold text-lg tracking-tight mb-1 text-[#EDEDED]">{member.name}</h4>
-                      <p className="text-indigo-400/80 text-xs font-medium tracking-wide uppercase mb-3">{member.role}</p>
-                      {member.bio && (
-                        <p className="text-[#888888] text-[13px] leading-relaxed font-light">{member.bio}</p>
-                      )}
-                    </motion.div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-20 relative z-10">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] mb-6 shadow-inner">
-                    <Users className="w-6 h-6 text-[#888888]" />
+                      </motion.div>
+                    ))}
                   </div>
-                  <h3 className="text-xl font-semibold text-[#EDEDED] mb-2 tracking-tight">Empty Roster</h3>
-                  <p className="text-[#888888] font-light">No members have been assigned to this team yet.</p>
-                </div>
-              )}
+                ) : (
+                  <div className="text-center py-20 relative z-10">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] mb-6 shadow-inner">
+                      <Users className="w-6 h-6 text-[#888888]" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-[#EDEDED] mb-2 tracking-tight">Empty Roster</h3>
+                    <p className="text-[#888888] font-light">No members have been assigned to this team yet.</p>
+                  </div>
+                )}
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 }
