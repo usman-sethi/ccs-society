@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://YOUR-RENDER-APP-URL.onrender.com/api/$1"
+      "destination": "https://ccs-society.onrender.com/api/$1"
     },
     {
       "source": "/(.*)",
