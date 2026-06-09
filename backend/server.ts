@@ -2,18 +2,18 @@ import 'dotenv/config';
 import express from 'express';
 import compression from 'compression';
 import cors from 'cors';
-import { connectDB } from './server/db.js';
+import { connectDB } from './server/db';
 
 // Import API routers
-import authRouter from './server/routes/auth.js';
-import eventsRouter from './server/routes/events.js';
-import teamsRouter from './server/routes/teams.js';
-import membersRouter from './server/routes/members.js';
-import queriesRouter from './server/routes/queries.js';
-import usersRouter from './server/routes/users.js';
-import announcementsRouter from './server/routes/announcements.js';
-import eventRegistrationsRouter from './server/routes/eventRegistrations.js';
-import developersRouter from './server/routes/developers.js';
+import authRouter from './server/routes/auth';
+import eventsRouter from './server/routes/events';
+import teamsRouter from './server/routes/teams';
+import membersRouter from './server/routes/members';
+import queriesRouter from './server/routes/queries';
+import usersRouter from './server/routes/users';
+import announcementsRouter from './server/routes/announcements';
+import eventRegistrationsRouter from './server/routes/eventRegistrations';
+import developersRouter from './server/routes/developers';
 
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);

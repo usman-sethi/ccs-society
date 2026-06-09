@@ -2,7 +2,6 @@
   "name": "ccs-backend",
   "version": "1.0.0",
   "description": "Backend for CCS platform, designed to be deployed on Render",
-  "type": "module",
   "scripts": {
     "start": "tsx server.ts",
     "dev": "tsx watch server.ts",
@@ -10,6 +9,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.2.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
