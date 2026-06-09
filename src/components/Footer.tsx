@@ -37,10 +37,10 @@ export default function Footer() {
               <a href="#" aria-label="GitHub Profile" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#888888] hover:bg-indigo-500/10 hover:border-indigo-500/30 hover:text-indigo-400 transition-all duration-300 hover:scale-110">
                 <Github className="w-4 h-4" />
               </a>
-              <a href="https://www.instagram.com/ccs_uop?igsh=MWoxZDJtOTdmM3lqNQ==" aria-label="Instagram Profile" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#888888] hover:bg-indigo-500/10 hover:border-indigo-500/30 hover:text-indigo-400 transition-all duration-300 hover:scale-110">
+              <a href="#" aria-label="Instagram Profile" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#888888] hover:bg-indigo-500/10 hover:border-indigo-500/30 hover:text-indigo-400 transition-all duration-300 hover:scale-110">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="https://www.linkedin.com/company/core-computing-society/" aria-label="LinkedIn Profile" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#888888] hover:bg-indigo-500/10 hover:border-indigo-500/30 hover:text-indigo-400 transition-all duration-300 hover:scale-110">
+              <a href="#" aria-label="LinkedIn Profile" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-[#888888] hover:bg-indigo-500/10 hover:border-indigo-500/30 hover:text-indigo-400 transition-all duration-300 hover:scale-110">
                 <Linkedin className="w-4 h-4" />
               </a>
             </div>
@@ -72,7 +72,7 @@ export default function Footer() {
           >
             <h3 className="text-[#EDEDED] text-sm font-semibold tracking-wider uppercase mb-6">Connect</h3>
             <ul className="space-y-4">
-              <li><a href="mailto:corecomputingsociety@gmail.com" className="text-[14px] text-[#888888] hover:text-indigo-400 transition-colors flex items-center gap-2"><Mail className="w-4 h-4" /> corecomputingsociety@gmail.com</a></li>
+              <li><a href="mailto:demo@example.com" className="text-[14px] text-[#888888] hover:text-indigo-400 transition-colors flex items-center gap-2"><Mail className="w-4 h-4" /> demo@example.com</a></li>
               <li><Link to="/contact" className="text-[14px] text-[#888888] hover:text-indigo-400 transition-colors">Contact Form</Link></li>
             </ul>
           </motion.div>

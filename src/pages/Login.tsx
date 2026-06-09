@@ -8,8 +8,8 @@ import { Helmet } from 'react-helmet-async';
 
 // Force Vite recompile
 export default function Login() {
-  const [email, setEmail] = useState('paradox@test.com');
-  const [password, setPassword] = useState('16Paradox2006;');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

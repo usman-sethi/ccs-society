@@ -46,7 +46,7 @@ export default function Terms() {
             </p>
             <h2 className="text-2xl font-semibold text-[#EDEDED] mt-8 mb-4">7. Contact Us</h2>
             <p>
-              If you have any questions about these Terms, please contact us at corecomputingsociety@gmail.com.
+              If you have any questions about these Terms, please contact us at demo@example.com.
             </p>
           </div>
         </motion.div>

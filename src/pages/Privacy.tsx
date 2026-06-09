@@ -38,7 +38,7 @@ export default function Privacy() {
             </p>
             <h2 className="text-2xl font-semibold text-[#EDEDED] mt-8 mb-4">5. Contact Us</h2>
             <p>
-              If you have any questions about this Privacy Policy, please contact us at corecomputingsociety@gmail.com.
+              If you have any questions about this Privacy Policy, please contact us at demo@example.com.
             </p>
           </div>
         </motion.div>

@@ -7,9 +7,9 @@ import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../lib/auth';
 
 export default function Signup() {
-  const [name, setName] = useState('Paradox');
-  const [email, setEmail] = useState('paradox@test.com');
-  const [password, setPassword] = useState('16Paradox2006;');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

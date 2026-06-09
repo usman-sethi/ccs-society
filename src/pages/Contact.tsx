@@ -83,11 +83,11 @@ export default function Contact() {
             Have a question, feedback, or want to collaborate? We'd love to hear from you.
           </p>
           <a 
-            href="mailto:corecomputingsociety@gmail.com" 
+            href="mailto:demo@example.com" 
             className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.08] text-[#EDEDED] hover:bg-white/[0.04] hover:border-white/[0.15] transition-all duration-300 backdrop-blur-md group"
           >
             <Mail className="w-4 h-4 text-[#888888] group-hover:text-indigo-400 transition-colors duration-300" />
-            <span className="text-[15px] font-medium tracking-wide">corecomputingsociety@gmail.com</span>
+            <span className="text-[15px] font-medium tracking-wide">demo@example.com</span>
           </a>
         </motion.div>
 
