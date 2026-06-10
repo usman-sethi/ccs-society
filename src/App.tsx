@@ -25,6 +25,7 @@ const Login = React.lazy(() => import('./pages/Login'));
 const Signup = React.lazy(() => import('./pages/Signup'));
 const Privacy = React.lazy(() => import('./pages/Privacy'));
 const Terms = React.lazy(() => import('./pages/Terms'));
+const Blog = React.lazy(() => import('./pages/Blog'));
 
 // Protected Pages
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
@@ -40,6 +41,7 @@ const ManageRegistrations = React.lazy(() => import('./pages/admin/ManageRegistr
 const QueryManagement = React.lazy(() => import('./pages/admin/QueryManagement'));
 const ManageAnnouncements = React.lazy(() => import('./pages/admin/ManageAnnouncements'));
 const ManageDevelopers = React.lazy(() => import('./pages/admin/ManageDevelopers'));
+const ManageFeedback = React.lazy(() => import('./pages/admin/ManageFeedback'));
 
 import Footer from './components/Footer';
 
@@ -140,6 +142,7 @@ const AnimatedPublicRoutes = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/blog" element={<Blog />} />
           </Routes>
         </Suspense>
       </motion.div>
@@ -189,6 +192,7 @@ export default function App() {
               <Route path="/admin/announcements" element={<ManageAnnouncements />} />
               <Route path="/admin/developers" element={<ManageDevelopers />} />
               <Route path="/admin/queries" element={<QueryManagement />} />
+              <Route path="/admin/feedback" element={<ManageFeedback />} />
             </Route>
           </Routes>
         </Router>

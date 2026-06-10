@@ -22,6 +22,7 @@ import usersRouter from './server/routes/users';
 import announcementsRouter from './server/routes/announcements';
 import eventRegistrationsRouter from './server/routes/eventRegistrations';
 import developersRouter from './server/routes/developers';
+import feedbackRouter from './server/routes/feedback';
 
 
 
@@ -51,6 +52,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/announcements', announcementsRouter);
 app.use('/api/event-registrations', eventRegistrationsRouter);
 app.use('/api/developers', developersRouter);
+app.use('/api/feedback', feedbackRouter);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });

@@ -26,6 +26,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean, onClose
     { name: 'Teams', path: '/teams', icon: Users },
     { name: 'Announcements', path: '/announcements', icon: Bell },
     { name: 'Developers', path: '/developers', icon: Code2 },
+    { name: 'Blog & Feedback', path: '/blog', icon: MessageSquare },
     { name: 'Profile', path: '/profile', icon: UserCircle },
   ];
 
@@ -39,6 +40,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean, onClose
     { name: 'Manage Announcements', path: '/admin/announcements', icon: Bell },
     { name: 'Manage Developers', path: '/admin/developers', icon: Code2 },
     { name: 'Queries', path: '/admin/queries', icon: MessageSquare },
+    { name: 'Manage Feedback', path: '/admin/feedback', icon: MessageSquare },
   ];
 
   const links = user?.role === 'Admin' ? [...userLinks, ...adminLinks] : userLinks;

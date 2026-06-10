@@ -84,6 +84,16 @@ const developerSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now }
 });
 
+const feedbackSchema = new mongoose.Schema({
+  authorName: { type: String, required: true },
+  authorEmail: { type: String },
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+  created_at: { type: Date, default: Date.now },
+  approved_at: { type: Date }
+});
+
 export const User = mongoose.model('User', userSchema);
 export const Event = mongoose.model('Event', eventSchema);
 export const EventRegistration = mongoose.model('EventRegistration', eventRegistrationSchema);
@@ -92,3 +102,4 @@ export const Member = mongoose.model('Member', memberSchema);
 export const Query = mongoose.model('Query', querySchema);
 export const Announcement = mongoose.model('Announcement', announcementSchema);
 export const Developer = mongoose.model('Developer', developerSchema);
+export const Feedback = mongoose.model('Feedback', feedbackSchema);
