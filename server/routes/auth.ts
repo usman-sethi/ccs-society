@@ -6,7 +6,7 @@ import { User, Otp } from '../models/index';
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key_for_dev';
-const resend = new Resend(process.env.RESEND_API_KEY || 're_31vrLGmd_HNuYUaDqhj5hRSuvMYrppKHw');
+const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_fallback_key_for_dev');
 
 const getAdminEmails = () => {
   const emails = process.env.ADMIN_EMAILS || 'surveyuniofpesh@gmail.com, paradox@test.com';

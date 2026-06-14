@@ -89,9 +89,10 @@ export default function Login() {
         loop 
         muted 
         playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-60"
+        className="fixed inset-0 w-full h-full object-cover -z-10 opacity-50 pointer-events-none"
       >
         <source src="/bg-video-galaxy.webm" type="video/webm" />
+        <source src="/bg-video.mp4" type="video/mp4" />
       </video>
 
       <motion.div
