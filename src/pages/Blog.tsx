@@ -166,7 +166,7 @@ function SubmitFeedbackModal({ isOpen, onClose, user }: { isOpen: boolean, onClo
                   value={formData.authorName}
                   onChange={(e) => setFormData(p => ({ ...p, authorName: e.target.value }))}
                   className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.08] rounded-xl focus:border-indigo-500/50 text-[#EDEDED] text-sm"
-                  placeholder="Your name"
+                  placeholder="paradox"
                 />
               </div>
               
@@ -178,7 +178,7 @@ function SubmitFeedbackModal({ isOpen, onClose, user }: { isOpen: boolean, onClo
                     value={formData.authorEmail}
                     onChange={(e) => setFormData(p => ({ ...p, authorEmail: e.target.value }))}
                     className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.08] rounded-xl focus:border-indigo-500/50 text-[#EDEDED] text-sm"
-                    placeholder="your@email.com"
+                    placeholder="paradox"
                   />
                 </div>
               )}
@@ -191,7 +191,7 @@ function SubmitFeedbackModal({ isOpen, onClose, user }: { isOpen: boolean, onClo
                   value={formData.title}
                   onChange={(e) => setFormData(p => ({ ...p, title: e.target.value }))}
                   className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.08] rounded-xl focus:border-indigo-500/50 text-[#EDEDED] text-sm"
-                  placeholder="Summarize your feedback"
+                  placeholder="paradox"
                 />
               </div>
 
@@ -202,7 +202,7 @@ function SubmitFeedbackModal({ isOpen, onClose, user }: { isOpen: boolean, onClo
                   value={formData.content}
                   onChange={(e) => setFormData(p => ({ ...p, content: e.target.value }))}
                   className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.08] rounded-xl focus:border-indigo-500/50 text-[#EDEDED] text-sm min-h-[120px] resize-none"
-                  placeholder="Describe your thoughts..."
+                  placeholder="paradox"
                 />
               </div>
 

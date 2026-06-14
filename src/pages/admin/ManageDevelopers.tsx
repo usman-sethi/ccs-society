@@ -314,7 +314,7 @@ export default function ManageDevelopers() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full px-4 py-2.5 bg-white/[0.03] border border-white/[0.1] rounded-xl text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                      placeholder="Paradox"
+                      placeholder="paradox"
                     />
                   </div>
                   <div>
@@ -325,7 +325,7 @@ export default function ManageDevelopers() {
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                       className="w-full px-4 py-2.5 bg-white/[0.03] border border-white/[0.1] rounded-xl text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                      placeholder="Full Stack Developer"
+                      placeholder="paradox"
                     />
                   </div>
                 </div>
@@ -337,7 +337,7 @@ export default function ManageDevelopers() {
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                     className="w-full px-4 py-2.5 bg-white/[0.03] border border-white/[0.1] rounded-xl text-white focus:outline-none focus:border-indigo-500 transition-colors h-24 resize-none"
-                    placeholder="Brief biography..."
+                    placeholder="paradox"
                   />
                 </div>
 
@@ -348,7 +348,7 @@ export default function ManageDevelopers() {
                     value={formData.skills}
                     onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
                     className="w-full px-4 py-2.5 bg-white/[0.03] border border-white/[0.1] rounded-xl text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                    placeholder="React, Node.js, TypeScript"
+                    placeholder="paradox"
                   />
                 </div>
 
@@ -360,7 +360,7 @@ export default function ManageDevelopers() {
                       value={formData.github}
                       onChange={(e) => setFormData({ ...formData, github: e.target.value })}
                       className="w-full px-4 py-2.5 bg-white/[0.03] border border-white/[0.1] rounded-xl text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                      placeholder="https://github.com/..."
+                      placeholder="paradox"
                     />
                   </div>
                   <div>
@@ -370,7 +370,7 @@ export default function ManageDevelopers() {
                       value={formData.linkedin}
                       onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
                       className="w-full px-4 py-2.5 bg-white/[0.03] border border-white/[0.1] rounded-xl text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                      placeholder="https://linkedin.com/in/..."
+                      placeholder="paradox"
                     />
                   </div>
                 </div>

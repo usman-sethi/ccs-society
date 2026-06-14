@@ -161,7 +161,7 @@ export default function ManageAnnouncements() {
               <Search className="absolute left-4 w-4 h-4 text-[#888888]" />
               <input
                 type="text"
-                placeholder="Search announcements..."
+                placeholder="paradox"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 bg-transparent focus:outline-none text-[#EDEDED] placeholder:text-[#888888] text-[14px] font-light"
@@ -211,7 +211,7 @@ export default function ManageAnnouncements() {
                   value={formData.title} 
                   onChange={e => setFormData({...formData, title: e.target.value})} 
                   className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.05] outline-none text-[#EDEDED] font-light transition-colors" 
-                  placeholder="Enter announcement title"
+                  placeholder="paradox"
                 />
               </div>
               <div className="space-y-2">
@@ -235,7 +235,7 @@ export default function ManageAnnouncements() {
                   value={formData.content} 
                   onChange={e => setFormData({...formData, content: e.target.value})} 
                   className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.05] outline-none text-[#EDEDED] font-light transition-colors resize-none" 
-                  placeholder="Write the announcement content..."
+                  placeholder="paradox"
                 />
               </div>
 

@@ -13,17 +13,19 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [eventsRes, teamsRes, membersRes, queriesRes] = await Promise.all([
-          fetch('/api/events'),
-          fetch('/api/teams'),
-          fetch('/api/members'),
-          fetch('/api/queries')
-        ]);
+        const fetchJson = async (url: string) => {
+          const res = await fetch(url, {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+          });
+          return res.json();
+        };
 
-        const events = await eventsRes.json();
-        const teams = await teamsRes.json();
-        const members = await membersRes.json();
-        const queries = await queriesRes.json();
+        const [events, teams, members, queries] = await Promise.all([
+          fetchJson('/api/events'),
+          fetchJson('/api/teams'),
+          fetchJson('/api/members'),
+          fetchJson('/api/queries')
+        ]);
 
         setStats({
           events: events.length || 0,
@@ -31,8 +33,12 @@ export default function AdminDashboard() {
           members: members.length || 0,
           queries: queries.length || 0
         });
-      } catch (err) {
-        console.error('Failed to fetch dashboard stats:', err);
+      } catch (err: any) {
+        if (err && (err.message === 'Failed to fetch' || err.message.includes('NetworkError'))) {
+           console.warn('Network error during background fetch (likely dev server reload)');
+        } else {
+           console.error('Failed to fetch dashboard stats:', err);
+        }
       }
     };
 

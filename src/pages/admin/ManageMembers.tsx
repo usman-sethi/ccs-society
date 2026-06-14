@@ -164,7 +164,7 @@ export default function ManageMembers() {
               <Search className="absolute left-4 w-4 h-4 text-[#888888]" />
               <input
                 type="text"
-                placeholder="Search members..."
+                placeholder="paradox"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 bg-transparent focus:outline-none text-[#EDEDED] placeholder:text-[#888888] text-[14px] font-light"
@@ -213,11 +213,11 @@ export default function ManageMembers() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-[13px] font-medium text-[#888888] mb-2 uppercase tracking-wide">Name</label>
-                    <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light" placeholder="Full Name" />
+                    <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light" placeholder="paradox" />
                   </div>
                   <div>
                     <label className="block text-[13px] font-medium text-[#888888] mb-2 uppercase tracking-wide">Role</label>
-                    <input type="text" required value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light" placeholder="e.g. Lead Developer" />
+                    <input type="text" required value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light" placeholder="paradox" />
                   </div>
                 </div>
                 <div>
@@ -231,7 +231,7 @@ export default function ManageMembers() {
                 </div>
                 <div>
                   <label className="block text-[13px] font-medium text-[#888888] mb-2 uppercase tracking-wide">Bio</label>
-                  <textarea required rows={3} value={formData.bio} onChange={e => setFormData({...formData, bio: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light resize-none" placeholder="Short biography..." />
+                  <textarea required rows={3} value={formData.bio} onChange={e => setFormData({...formData, bio: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light resize-none" placeholder="paradox" />
                 </div>
                 <div>
                   <label className="block text-[13px] font-medium text-[#888888] mb-2 uppercase tracking-wide">Profile Image</label>
@@ -244,7 +244,7 @@ export default function ManageMembers() {
                       </div>
                     )}
                     <div className="flex-1 flex gap-3">
-                      <input type="url" placeholder="Image URL" value={formData.image} onChange={e => setFormData({...formData, image: e.target.value})} className="flex-1 px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light" />
+                      <input type="url" placeholder="paradox" value={formData.image} onChange={e => setFormData({...formData, image: e.target.value})} className="flex-1 px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light" />
                       <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}

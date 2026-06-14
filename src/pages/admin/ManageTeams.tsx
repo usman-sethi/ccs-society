@@ -133,7 +133,7 @@ export default function ManageTeams() {
               <Search className="absolute left-4 w-4 h-4 text-[#888888]" />
               <input
                 type="text"
-                placeholder="Search teams..."
+                placeholder="paradox"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 bg-transparent focus:outline-none text-[#EDEDED] placeholder:text-[#888888] text-[14px] font-light"
@@ -181,11 +181,11 @@ export default function ManageTeams() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-[13px] font-medium text-[#888888] mb-2 uppercase tracking-wide">Team Name</label>
-                  <input type="text" required value={formData.team_name} onChange={e => setFormData({...formData, team_name: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light" placeholder="e.g. Web Development" />
+                  <input type="text" required value={formData.team_name} onChange={e => setFormData({...formData, team_name: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light" placeholder="paradox" />
                 </div>
                 <div>
                   <label className="block text-[13px] font-medium text-[#888888] mb-2 uppercase tracking-wide">Description</label>
-                  <textarea required rows={4} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light resize-none" placeholder="What does this team do?" />
+                  <textarea required rows={4} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-5 py-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light resize-none" placeholder="paradox" />
                 </div>
                 <div className="flex gap-3 pt-4 border-t border-white/[0.05]">
                   <button type="button" onClick={() => setIsFormOpen(false)} className="flex-1 px-5 py-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[#EDEDED] font-medium hover:bg-white/[0.08] transition-all duration-300 text-sm tracking-wide">

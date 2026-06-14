@@ -133,7 +133,7 @@ export default function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className={`w-full px-5 py-4 rounded-xl bg-white/[0.02] border ${errors.name ? 'border-red-500/50' : 'border-white/[0.08]'} focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light placeholder:text-[#888888]/50`}
-                      placeholder="John Doe"
+                      placeholder="paradox"
                     />
                     {errors.name && <p className="text-red-400 text-xs mt-2 font-medium">{errors.name}</p>}
                   </div>
@@ -147,7 +147,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className={`w-full px-5 py-4 rounded-xl bg-white/[0.02] border ${errors.email ? 'border-red-500/50' : 'border-white/[0.08]'} focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light placeholder:text-[#888888]/50`}
-                      placeholder="you@example.com"
+                      placeholder="paradox"
                     />
                     {errors.email && <p className="text-red-400 text-xs mt-2 font-medium">{errors.email}</p>}
                   </div>
@@ -162,7 +162,7 @@ export default function Contact() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className={`w-full px-5 py-4 rounded-xl bg-white/[0.02] border ${errors.message ? 'border-red-500/50' : 'border-white/[0.08]'} focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light placeholder:text-[#888888]/50 resize-none`}
-                    placeholder="How can we help you?"
+                    placeholder="paradox"
                   />
                   {errors.message && <p className="text-red-400 text-xs mt-2 font-medium">{errors.message}</p>}
                 </div>

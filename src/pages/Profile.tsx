@@ -123,7 +123,7 @@ export default function Profile() {
                   value={formData.profile_pic}
                   onChange={(e) => setFormData({ ...formData, profile_pic: e.target.value })}
                   className="flex-1 px-5 py-4 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light placeholder:text-[#888888]/50"
-                  placeholder="https://example.com/image.jpg"
+                  placeholder="https://example.com/avatar.jpg"
                 />
                 <button
                   type="button"
@@ -164,7 +164,7 @@ export default function Profile() {
                 value={formData.bio}
                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                 className="w-full px-5 py-4 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light resize-none placeholder:text-[#888888]/50"
-                placeholder="Tell us about yourself..."
+                placeholder="Software Engineering Student, passionate about AI..."
               />
             </div>
 
@@ -179,7 +179,7 @@ export default function Profile() {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="w-full px-5 py-4 rounded-xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none transition-all duration-300 text-[#EDEDED] text-[15px] font-light placeholder:text-[#888888]/50"
-                  placeholder="Leave blank to keep current"
+                  placeholder="Leave blank to keep current password"
                 />
               </div>
             </div>

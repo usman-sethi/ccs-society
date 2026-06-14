@@ -118,7 +118,7 @@ export default function QueryManagement() {
               <Search className="absolute left-4 w-4 h-4 text-[#888888]" />
               <input
                 type="text"
-                placeholder="Search queries..."
+                placeholder="paradox"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 bg-transparent focus:outline-none text-[#EDEDED] placeholder:text-[#888888] text-[14px] font-light"
@@ -226,7 +226,7 @@ export default function QueryManagement() {
                         rows={4}
                         value={replyText}
                         onChange={(e) => setReplyText(e.target.value)}
-                        placeholder="Type your reply here..."
+                        placeholder="paradox"
                         className="w-full px-5 py-4 rounded-2xl bg-white/[0.02] border border-white/[0.08] focus:border-indigo-500/50 focus:bg-white/[0.04] outline-none resize-none text-[#EDEDED] font-light transition-colors"
                       />
                       <div className="flex gap-3">

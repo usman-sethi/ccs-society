@@ -116,7 +116,7 @@ export default function Teams() {
               <Search className="absolute left-5 w-5 h-5 text-[#888888]" />
               <input
                 type="text"
-                placeholder="Search teams by name or description..."
+                placeholder="Search teams by name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-14 pr-5 py-4 bg-transparent focus:outline-none text-[#EDEDED] placeholder:text-[#888888] text-[15px] font-light"

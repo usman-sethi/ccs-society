@@ -247,7 +247,7 @@ export default function EventRegistrationModal({ isOpen, onClose, event }: Event
                       value={formData.program}
                       onChange={(e) => setFormData({ ...formData, program: e.target.value })}
                       className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.08] rounded-xl focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.04] text-[#EDEDED] transition-all duration-300 text-[15px] font-light placeholder:text-[#888888]/50"
-                      placeholder="BSCS"
+                      placeholder="Computer Science"
                     />
                   </div>
                   <div>
@@ -258,7 +258,7 @@ export default function EventRegistrationModal({ isOpen, onClose, event }: Event
                       value={formData.section}
                       onChange={(e) => setFormData({ ...formData, section: e.target.value })}
                       className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.08] rounded-xl focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.04] text-[#EDEDED] transition-all duration-300 text-[15px] font-light placeholder:text-[#888888]/50"
-                      placeholder="A"
+                      placeholder="Section A"
                     />
                   </div>
                   <div>
@@ -269,7 +269,7 @@ export default function EventRegistrationModal({ isOpen, onClose, event }: Event
                       value={formData.mobile_number}
                       onChange={handleMobileChange}
                       className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.08] rounded-xl focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.04] text-[#EDEDED] transition-all duration-300 text-[15px] font-light placeholder:text-[#888888]/50"
-                      placeholder="+92 000 000 0000"
+                      placeholder="+1 (555) 000-0000"
                     />
                   </div>
                   <div>

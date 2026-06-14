@@ -146,7 +146,7 @@ export default function ManageEvents() {
             <Search className="absolute left-4 w-4 h-4 text-[#888888]" />
             <input
               type="text"
-              placeholder="Search events..."
+              placeholder="paradox"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-11 pr-4 py-3 bg-transparent focus:outline-none text-[#EDEDED] placeholder:text-[#888888] text-[14px] font-light"

@@ -4,6 +4,7 @@ import { useAuth } from '../lib/auth';
 import { Calendar, Users, Bell, Activity, MessageSquare, RefreshCw, ArrowRight, GitCommit } from 'lucide-react';
 import { format } from 'date-fns';
 import ActivityGraph from '../components/ActivityGraph';
+import SubmitFeedbackModal from '../components/SubmitFeedbackModal';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -12,12 +13,17 @@ export default function Dashboard() {
   const [announcements, setAnnouncements] = useState<any[]>([]);
   const [queries, setQueries] = useState<any[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
   const fetchData = useCallback(async () => {
     setIsRefreshing(true);
     try {
       const fetchJson = async (url: string) => {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
@@ -40,8 +46,13 @@ export default function Dashboard() {
       setTeams(teamsData);
       setAnnouncements(announcementsData);
       setQueries(queriesData);
-    } catch (error) {
-      console.error('Failed to fetch dashboard data:', error);
+    } catch (error: any) {
+      // Ignore network errors which commonly happen during dev server hot-restarts
+      if (error && (error.message === 'Failed to fetch' || error.message.includes('NetworkError'))) {
+        console.warn('Network error during background fetch (likely dev server reload)');
+      } else {
+        console.error('Failed to fetch dashboard data:', error);
+      }
     } finally {
       setIsRefreshing(false);
     }
@@ -126,17 +137,29 @@ export default function Dashboard() {
           </h1>
           <p className="text-[#888888] font-light text-lg">Here's what's happening in the society.</p>
         </motion.div>
-        <motion.button
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          onClick={fetchData}
-          disabled={isRefreshing}
-          className="flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] rounded-full text-[13px] font-medium transition-all duration-300 disabled:opacity-50 self-start sm:self-auto text-[#EDEDED] backdrop-blur-md"
-        >
-          <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-indigo-400' : 'text-[#888888]'}`} />
-          Refresh Stats
-        </motion.button>
+        <div className="flex items-center gap-3 self-start sm:self-auto">
+          <motion.button
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            onClick={() => setIsFeedbackModalOpen(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-indigo-500 hover:bg-indigo-600 rounded-full text-[13px] font-medium transition-all duration-300 text-white backdrop-blur-md"
+          >
+            <MessageSquare className="w-4 h-4" />
+            Submit Feedback
+          </motion.button>
+          <motion.button
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+            onClick={fetchData}
+            disabled={isRefreshing}
+            className="flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] rounded-full text-[13px] font-medium transition-all duration-300 disabled:opacity-50 text-[#EDEDED] backdrop-blur-md"
+          >
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-indigo-400' : 'text-[#888888]'}`} />
+            Refresh Stats
+          </motion.button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -307,6 +330,11 @@ export default function Dashboard() {
           </div>
         </motion.div>
       </div>
+      <SubmitFeedbackModal
+        isOpen={isFeedbackModalOpen}
+        onClose={() => setIsFeedbackModalOpen(false)}
+        user={user}
+      />
     </div>
   );
 }

@@ -28,6 +28,7 @@ export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean, onClose
     { name: 'Developers', path: '/developers', icon: Code2 },
     { name: 'Blog & Feedback', path: '/blog', icon: MessageSquare },
     { name: 'Profile', path: '/profile', icon: UserCircle },
+    { name: 'Organization', path: '/organization', icon: Users },
   ];
 
   const adminLinks = [
