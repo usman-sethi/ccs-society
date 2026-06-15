@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import mongoose from 'mongoose';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import compression from 'compression';
@@ -55,7 +56,8 @@ app.use('/api/developers', developersRouter);
 app.use('/api/feedback', feedbackRouter);
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' });
+  const isConnected = mongoose.connection.readyState === 1;
+  res.json({ status: 'ok', dbConnected: isConnected });
 });
 
 // Global API error handler
