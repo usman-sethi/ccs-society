@@ -36,7 +36,6 @@
     "react-player": "^3.4.0",
     "react-router-dom": "^7.13.1",
     "remark-gfm": "^4.0.1",
-    "resend": "^6.12.4",
     "serverless-http": "^4.0.0",
     "tailwind-merge": "^3.5.0",
     "tsx": "^4.21.0",

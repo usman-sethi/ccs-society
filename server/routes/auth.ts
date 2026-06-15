@@ -1,12 +1,10 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { Resend } from 'resend';
 import { User, Otp } from '../models/index';
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key_for_dev';
-const resend = new Resend('re_31vrLGmd_HNuYUaDqhj5hRSuvMYrppKHw');
 
 const getAdminEmails = () => {
   const emails = process.env.ADMIN_EMAILS || 'surveyuniofpesh@gmail.com, paradox@test.com';
@@ -33,22 +31,8 @@ router.post('/send-otp', async (req, res) => {
     });
     await newOtp.save();
 
-    const emailResult = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: 'Your Verification Code',
-      html: `<p>Your verification code is: <strong>${code}</strong>. It will expire in 5 minutes.</p>`
-    });
-
-    if (emailResult.error) {
-      console.error('Resend API Error:', emailResult.error);
-      if (emailResult.error.name !== 'validation_error') {
-        return res.status(500).json({ success: false, message: 'Failed to send OTP email', error: emailResult.error.message });
-      }
-    }
-
     console.log(`[Dev/Test] OTP for ${email}: ${code}`);
-    res.json({ success: true, message: 'OTP sent successfully' });
+    res.json({ success: true, message: 'OTP stored successfully (email disabled)' });
   } catch (error: any) {
     console.error('Send OTP error:', error);
     res.status(500).json({ success: false, message: 'Internal server error', error: error.message || 'Unknown error' });
@@ -135,35 +119,36 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ success: false, message: 'User exists', error: 'User already exists' });
     }
 
-    // Send OTP instead of creating account immediately
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 mins
+    const isAdmin = getAdminEmails().includes(email.toLowerCase());
+    const role = isAdmin ? 'Admin' : 'User';
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    await Otp.deleteMany({ email: email.toLowerCase() });
-
-    const newOtp = new Otp({
+    const newUser = new User({
+      name,
       email: email.toLowerCase(),
-      code,
-      expiresAt
-    });
-    await newOtp.save();
-
-    const emailResult = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: 'Your Account Verification Code',
-      html: `<p>Your verification code to complete sign up is: <strong>${code}</strong>. It will expire in 5 minutes.</p>`
+      password: hashedPassword,
+      role,
+      profile_pic: '',
+      bio: ''
     });
 
-    if (emailResult.error) {
-      console.error('Resend API Error:', emailResult.error);
-      if (emailResult.error.name !== 'validation_error') {
-        return res.status(500).json({ success: false, message: 'Failed to send sign up OTP email', error: emailResult.error.message });
-      }
-    }
+    await newUser.save();
 
-    console.log(`[Dev/Test] Signup OTP for ${email}: ${code}`);
-    res.json({ success: true, requireOtp: true, message: 'OTP sent to email for verification' });
+    const token = jwt.sign({ id: newUser._id, role: newUser.role }, JWT_SECRET, { expiresIn: '7d' });
+
+    const userResponse = {
+      id: newUser._id.toString(),
+      name: newUser.name,
+      email: newUser.email,
+      role: newUser.role,
+      profile_pic: newUser.profile_pic,
+      bio: newUser.bio,
+      created_at: newUser.created_at
+    };
+
+    res.json({ success: true, requireOtp: false, message: 'Signup successful', data: { user: userResponse, token } });
   } catch (error: any) {
     console.error('Signup error:', error);
     res.status(500).json({ success: false, message: 'Internal server error', error: error.message || 'Unknown error' });
@@ -249,35 +234,25 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ success: false, message: 'Login failed', error: 'Invalid credentials' });
     }
 
-    // Password matches! Send OTP
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 mins
-
-    await Otp.deleteMany({ email: email.toLowerCase() });
-
-    const newOtp = new Otp({
-      email: email.toLowerCase(),
-      code,
-      expiresAt
-    });
-    await newOtp.save();
-
-    const emailResult = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: 'Your Login Verification Code',
-      html: `<p>Your verification code to complete login is: <strong>${code}</strong>. It will expire in 5 minutes.</p>`
-    });
-
-    if (emailResult.error) {
-      console.error('Resend API Error:', emailResult.error);
-      if (emailResult.error.name !== 'validation_error') {
-        return res.status(500).json({ success: false, message: 'Failed to send login OTP email', error: emailResult.error.message });
-      }
+    const isAdmin = getAdminEmails().includes(email.toLowerCase());
+    if (isAdmin && user.role !== 'Admin') {
+       user.role = 'Admin';
+       await user.save();
     }
 
-    console.log(`[Dev/Test] Login OTP for ${email}: ${code}`);
-    res.json({ success: true, requireOtp: true, message: 'OTP sent to email for login verification' });
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+
+    const userResponse = {
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profile_pic: user.profile_pic,
+      bio: user.bio,
+      created_at: user.created_at
+    };
+
+    res.json({ success: true, requireOtp: false, message: 'Login successful', data: { user: userResponse, token } });
   } catch (error: any) {
     console.error('Login error:', error);
     res.status(500).json({ success: false, message: 'Internal server error', error: error.message || 'Unknown error' });
