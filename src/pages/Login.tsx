@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import ReactPlayer from 'react-player';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../lib/auth';
 import { useNavigate, Link } from 'react-router-dom';
@@ -9,8 +8,6 @@ import toast from 'react-hot-toast';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [otpCode, setOtpCode] = useState('');
-  const [step, setStep] = useState<'credentials' | 'otp'>('credentials');
   const [loading, setLoading] = useState(false);
   
   const { login } = useAuth();
@@ -34,45 +31,13 @@ export default function Login() {
         throw new Error(data.error || data.message || 'Login failed');
       }
       
-      if (data.requireOtp) {
-        setStep('otp');
-        toast.success('Check your email for the verification code!');
-      } else if (data.data?.token) {
-         // fallback in case backend gets updated to not require OTP
+      if (data.data?.token) {
          login(data.data.token, data.data.user);
          toast.success('Successfully logged in!');
          navigate('/dashboard');
       }
     } catch (error: any) {
       toast.error(error.message || 'Invalid credentials. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleOtpVerify = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch('/api/auth/verify-login-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, code: otpCode }),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Verification failed');
-      }
-      
-      login(data.data.token, data.data.user);
-      toast.success('Successfully logged in!');
-      navigate('/dashboard');
-    } catch (error: any) {
-      toast.error(error.message || 'Invalid or expired code. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -97,102 +62,41 @@ export default function Login() {
           <div className="text-center mb-8">
             <h2 className="text-[#EDEDED] font-bold text-2xl tracking-tight mb-2">Welcome Back</h2>
             <p className="text-[#888888] font-light text-sm">
-              {step === 'credentials' ? 'Sign in to your account to continue' : 'Enter the verification code sent to your email'}
+              Sign in to your account to continue
             </p>
           </div>
 
-          <AnimatePresence mode="wait">
-            {step === 'credentials' ? (
-              <motion.form
-                key="password-form"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3 }}
-                onSubmit={handlePasswordSubmit}
-                className="space-y-4"
-              >
-                <div>
-                  <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1">Email Address</label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 rounded-xl py-3 px-4 outline-none transition-all"
-                    placeholder="paradox@gmail.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1">Password</label>
-                  <input
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 rounded-xl py-3 px-4 outline-none transition-all"
-                    placeholder="*********"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full mt-6 bg-[#EDEDED] hover:bg-white text-[#0A0A0A] font-medium py-3 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Verifying...' : 'Sign In'}
-                </button>
-              </motion.form>
-            ) : (
-              <motion.form
-                key="otp-form"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                onSubmit={handleOtpVerify}
-                className="space-y-4"
-              >
-                <div>
-                  <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1 text-center">Verification Code</label>
-                  <input
-                    type="text"
-                    required
-                    value={otpCode}
-                    onChange={(e) => setOtpCode(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 rounded-xl py-3 px-4 outline-none transition-all tracking-[0.5em] text-center text-lg"
-                    placeholder="123456"
-                    maxLength={6}
-                  />
-                </div>
-                
-                <button
-                  type="submit"
-                  disabled={loading || otpCode.length < 6}
-                  className="w-full mt-6 bg-[#EDEDED] hover:bg-white text-[#0A0A0A] font-medium py-3 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Verifying...' : 'Verify & Log In'}
-                </button>
-                
-                <div className="flex justify-between items-center mt-4">
-                  <button 
-                    type="button" 
-                    onClick={() => setStep('credentials')} 
-                    className="text-xs text-[#888888] hover:text-white transition-colors"
-                  >
-                    ← Back to login
-                  </button>
-                  <button 
-                    type="button" 
-                    onClick={handlePasswordSubmit} 
-                    disabled={loading}
-                    className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
-                  >
-                    Resend code
-                  </button>
-                </div>
-              </motion.form>
-            )}
-          </AnimatePresence>
+          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+            <div>
+              <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1">Email Address</label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 rounded-xl py-3 px-4 outline-none transition-all"
+                placeholder="paradox@gmail.com"
+              />
+            </div>
+            <div>
+              <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1">Password</label>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 rounded-xl py-3 px-4 outline-none transition-all"
+                placeholder="*********"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-6 bg-[#EDEDED] hover:bg-white text-[#0A0A0A] font-medium py-3 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
           
           <div className="mt-8 text-center border-t border-white/[0.05] pt-6">
             <p className="text-[#888888] text-sm">

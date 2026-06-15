@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import ReactPlayer from 'react-player';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../lib/auth';
 import { useNavigate, Link } from 'react-router-dom';
@@ -12,8 +11,6 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [otpCode, setOtpCode] = useState('');
-  const [step, setStep] = useState<'details' | 'otp'>('details');
   const [loading, setLoading] = useState(false);
   
   const { login } = useAuth();
@@ -66,44 +63,13 @@ export default function Signup() {
         throw new Error(data.error || data.message || 'Signup failed');
       }
       
-      if (data.requireOtp) {
-        setStep('otp');
-        toast.success('Check your email for the verification code!');
-      } else if (data.data?.token) {
+      if (data.data?.token) {
         login(data.data.token, data.data.user);
         toast.success('Account created successfully!');
         navigate('/dashboard');
       }
     } catch (error: any) {
       toast.error(error.message || 'Could not verify details. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleOtpVerify = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch('/api/auth/verify-signup-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password, code: otpCode }),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Verification failed');
-      }
-      
-      login(data.data.token, data.data.user);
-      toast.success('Account created successfully!');
-      navigate('/dashboard');
-    } catch (error: any) {
-      toast.error(error.message || 'Invalid or expired code. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -128,134 +94,73 @@ export default function Signup() {
           <div className="text-center mb-8">
             <h2 className="text-[#EDEDED] font-bold text-2xl tracking-tight mb-2">Create Account</h2>
             <p className="text-[#888888] font-light text-sm">
-              {step === 'details' ? 'Join the Core Computing Society' : 'Enter the verification code sent to your email'}
+              Join the Core Computing Society
             </p>
           </div>
 
-          <AnimatePresence mode="wait">
-            {step === 'details' ? (
-              <motion.form 
-                key="details-form"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3 }}
-                onSubmit={handleSignupSubmit} 
-                className="space-y-4"
-              >
-                <div>
-                  <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1">Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 rounded-xl py-3 px-4 outline-none transition-all"
-                    placeholder="Freshman Student"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1">Email Address</label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 rounded-xl py-3 px-4 outline-none transition-all"
-                    placeholder="paradox@gmail.com"
-                  />
-                </div>
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium">Password</label>
-                    <button type="button" onClick={suggestStrongPassword} className="text-[#888888] hover:text-purple-400 flex items-center gap-1 text-[11px] uppercase tracking-wider font-medium transition-colors">
-                      <Wand2 className="w-3 h-3" /> Auto-generate
-                    </button>
-                  </div>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 rounded-xl py-3 px-4 pr-10 outline-none transition-all"
-                      placeholder="*********"
-                    />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#888888] hover:text-white transition-colors">
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                  {password && (
-                    <div className="mt-2">
-                      <div className="flex items-center justify-between text-xs mb-1">
-                        <span className="text-[#888888]">Password Strength</span>
-                        <span className={strength.txt}>{strength.text}</span>
-                      </div>
-                      <div className="w-full bg-white/[0.05] h-1.5 rounded-full overflow-hidden">
-                        <div className={`h-full ${strength.w} ${strength.bg} transition-all duration-300`}></div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full mt-6 bg-[#EDEDED] hover:bg-white text-[#0A0A0A] font-medium py-3 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Sending Code...' : 'Continue'}
+          <form onSubmit={handleSignupSubmit} className="space-y-4">
+            <div>
+              <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1">Full Name</label>
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 rounded-xl py-3 px-4 outline-none transition-all"
+                placeholder="Freshman Student"
+              />
+            </div>
+            <div>
+              <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1">Email Address</label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 rounded-xl py-3 px-4 outline-none transition-all"
+                placeholder="paradox@gmail.com"
+              />
+            </div>
+            <div>
+              <div className="flex justify-between mb-1">
+                <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium">Password</label>
+                <button type="button" onClick={suggestStrongPassword} className="text-[#888888] hover:text-purple-400 flex items-center gap-1 text-[11px] uppercase tracking-wider font-medium transition-colors">
+                  <Wand2 className="w-3 h-3" /> Auto-generate
                 </button>
-              </motion.form>
-            ) : (
-              <motion.form
-                key="otp-form"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                onSubmit={handleOtpVerify}
-                className="space-y-4"
-              >
-                <div>
-                  <label className="block text-[#888888] text-[12px] uppercase tracking-widest font-medium mb-1 text-center">Verification Code</label>
-                  <input
-                    type="text"
-                    required
-                    value={otpCode}
-                    onChange={(e) => setOtpCode(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 rounded-xl py-3 px-4 outline-none transition-all tracking-[0.5em] text-center text-lg"
-                    placeholder="123456"
-                    maxLength={6}
-                  />
-                </div>
-                
-                <button
-                  type="submit"
-                  disabled={loading || otpCode.length < 6}
-                  className="w-full mt-6 bg-[#EDEDED] hover:bg-white text-[#0A0A0A] font-medium py-3 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Verifying...' : 'Verify & Create Account'}
+              </div>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-white/[0.03] border border-white/[0.05] text-[#EDEDED] focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 rounded-xl py-3 px-4 pr-10 outline-none transition-all"
+                  placeholder="*********"
+                />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#888888] hover:text-white transition-colors">
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
-                
-                <div className="flex justify-between items-center mt-4">
-                  <button 
-                    type="button" 
-                    onClick={() => setStep('details')} 
-                    className="text-xs text-[#888888] hover:text-white transition-colors"
-                  >
-                    ← Back to details
-                  </button>
-                  <button 
-                    type="button" 
-                    onClick={handleSignupSubmit} 
-                    disabled={loading}
-                    className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
-                  >
-                    Resend code
-                  </button>
+              </div>
+              {password && (
+                <div className="mt-2">
+                  <div className="flex items-center justify-between text-xs mb-1">
+                    <span className="text-[#888888]">Password Strength</span>
+                    <span className={strength.txt}>{strength.text}</span>
+                  </div>
+                  <div className="w-full bg-white/[0.05] h-1.5 rounded-full overflow-hidden">
+                    <div className={`h-full ${strength.w} ${strength.bg} transition-all duration-300`}></div>
+                  </div>
                 </div>
-              </motion.form>
-            )}
-          </AnimatePresence>
+              )}
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-6 bg-[#EDEDED] hover:bg-white text-[#0A0A0A] font-medium py-3 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Creating Account...' : 'Continue'}
+            </button>
+          </form>
           
           <div className="mt-8 text-center border-t border-white/[0.05] pt-6">
             <p className="text-[#888888] text-sm">

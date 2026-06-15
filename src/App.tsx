@@ -13,35 +13,57 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import { Menu, X } from 'lucide-react';
 
+// Utility to handle dynamic import failures (common in Vite HMR and restarts)
+const lazyWithRetry = (componentImport: () => Promise<any>) => {
+  return React.lazy(async () => {
+    const pageHasAlreadyBeenForceRefreshed = JSON.parse(
+      window.sessionStorage.getItem('page-has-been-force-refreshed') || 'false'
+    );
+    try {
+      const component = await componentImport();
+      window.sessionStorage.setItem('page-has-been-force-refreshed', 'false');
+      return component;
+    } catch (error) {
+      if (!pageHasAlreadyBeenForceRefreshed) {
+        window.sessionStorage.setItem('page-has-been-force-refreshed', 'true');
+        window.location.reload();
+        // Return a promise that never resolves while reloading
+        return new Promise(() => {});
+      }
+      throw error;
+    }
+  });
+};
+
 // Lazy load pages for performance
-const Home = React.lazy(() => import('./pages/Home'));
-const About = React.lazy(() => import('./pages/About'));
-const Teams = React.lazy(() => import('./pages/Teams'));
-const Events = React.lazy(() => import('./pages/Events'));
-const Announcements = React.lazy(() => import('./pages/Announcements'));
-const Contact = React.lazy(() => import('./pages/Contact'));
-const Developers = React.lazy(() => import('./pages/Developers'));
-const Login = React.lazy(() => import('./pages/Login'));
-const Signup = React.lazy(() => import('./pages/Signup'));
-const Privacy = React.lazy(() => import('./pages/Privacy'));
-const Terms = React.lazy(() => import('./pages/Terms'));
-const Blog = React.lazy(() => import('./pages/Blog'));
+const Home = lazyWithRetry(() => import('./pages/Home'));
+const About = lazyWithRetry(() => import('./pages/About'));
+const Teams = lazyWithRetry(() => import('./pages/Teams'));
+const Events = lazyWithRetry(() => import('./pages/Events'));
+const Announcements = lazyWithRetry(() => import('./pages/Announcements'));
+const Contact = lazyWithRetry(() => import('./pages/Contact'));
+const Developers = lazyWithRetry(() => import('./pages/Developers'));
+const Login = lazyWithRetry(() => import('./pages/Login'));
+const Signup = lazyWithRetry(() => import('./pages/Signup'));
+const Privacy = lazyWithRetry(() => import('./pages/Privacy'));
+const Terms = lazyWithRetry(() => import('./pages/Terms'));
+const Blog = lazyWithRetry(() => import('./pages/Blog'));
 
 // Protected Pages
-const Dashboard = React.lazy(() => import('./pages/Dashboard'));
-const Profile = React.lazy(() => import('./pages/Profile'));
+const Dashboard = lazyWithRetry(() => import('./pages/Dashboard'));
+const Profile = lazyWithRetry(() => import('./pages/Profile'));
 
 // Admin Pages
-const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
-const ManageEvents = React.lazy(() => import('./pages/admin/ManageEvents'));
-const ManageTeams = React.lazy(() => import('./pages/admin/ManageTeams'));
-const ManageMembers = React.lazy(() => import('./pages/admin/ManageMembers'));
-const ManageUsers = React.lazy(() => import('./pages/admin/ManageUsers'));
-const ManageRegistrations = React.lazy(() => import('./pages/admin/ManageRegistrations'));
-const QueryManagement = React.lazy(() => import('./pages/admin/QueryManagement'));
-const ManageAnnouncements = React.lazy(() => import('./pages/admin/ManageAnnouncements'));
-const ManageDevelopers = React.lazy(() => import('./pages/admin/ManageDevelopers'));
-const ManageFeedback = React.lazy(() => import('./pages/admin/ManageFeedback'));
+const AdminDashboard = lazyWithRetry(() => import('./pages/admin/AdminDashboard'));
+const ManageEvents = lazyWithRetry(() => import('./pages/admin/ManageEvents'));
+const ManageTeams = lazyWithRetry(() => import('./pages/admin/ManageTeams'));
+const ManageMembers = lazyWithRetry(() => import('./pages/admin/ManageMembers'));
+const ManageUsers = lazyWithRetry(() => import('./pages/admin/ManageUsers'));
+const ManageRegistrations = lazyWithRetry(() => import('./pages/admin/ManageRegistrations'));
+const QueryManagement = lazyWithRetry(() => import('./pages/admin/QueryManagement'));
+const ManageAnnouncements = lazyWithRetry(() => import('./pages/admin/ManageAnnouncements'));
+const ManageDevelopers = lazyWithRetry(() => import('./pages/admin/ManageDevelopers'));
+const ManageFeedback = lazyWithRetry(() => import('./pages/admin/ManageFeedback'));
 
 import Footer from './components/Footer';
 
