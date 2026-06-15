@@ -6,7 +6,7 @@ import { User, Otp } from '../models/index';
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key_for_dev';
-const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_fallback_key_for_dev');
+const resend = new Resend('re_31vrLGmd_HNuYUaDqhj5hRSuvMYrppKHw');
 
 const getAdminEmails = () => {
   const emails = process.env.ADMIN_EMAILS || 'surveyuniofpesh@gmail.com, paradox@test.com';
@@ -33,13 +33,21 @@ router.post('/send-otp', async (req, res) => {
     });
     await newOtp.save();
 
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: email,
       subject: 'Your Verification Code',
       html: `<p>Your verification code is: <strong>${code}</strong>. It will expire in 5 minutes.</p>`
     });
 
+    if (emailResult.error) {
+      console.error('Resend API Error:', emailResult.error);
+      if (emailResult.error.name !== 'validation_error') {
+        return res.status(500).json({ success: false, message: 'Failed to send OTP email', error: emailResult.error.message });
+      }
+    }
+
+    console.log(`[Dev/Test] OTP for ${email}: ${code}`);
     res.json({ success: true, message: 'OTP sent successfully' });
   } catch (error: any) {
     console.error('Send OTP error:', error);
@@ -140,13 +148,21 @@ router.post('/signup', async (req, res) => {
     });
     await newOtp.save();
 
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: email,
       subject: 'Your Account Verification Code',
       html: `<p>Your verification code to complete sign up is: <strong>${code}</strong>. It will expire in 5 minutes.</p>`
     });
 
+    if (emailResult.error) {
+      console.error('Resend API Error:', emailResult.error);
+      if (emailResult.error.name !== 'validation_error') {
+        return res.status(500).json({ success: false, message: 'Failed to send sign up OTP email', error: emailResult.error.message });
+      }
+    }
+
+    console.log(`[Dev/Test] Signup OTP for ${email}: ${code}`);
     res.json({ success: true, requireOtp: true, message: 'OTP sent to email for verification' });
   } catch (error: any) {
     console.error('Signup error:', error);
@@ -246,13 +262,21 @@ router.post('/login', async (req, res) => {
     });
     await newOtp.save();
 
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: email,
       subject: 'Your Login Verification Code',
       html: `<p>Your verification code to complete login is: <strong>${code}</strong>. It will expire in 5 minutes.</p>`
     });
 
+    if (emailResult.error) {
+      console.error('Resend API Error:', emailResult.error);
+      if (emailResult.error.name !== 'validation_error') {
+        return res.status(500).json({ success: false, message: 'Failed to send login OTP email', error: emailResult.error.message });
+      }
+    }
+
+    console.log(`[Dev/Test] Login OTP for ${email}: ${code}`);
     res.json({ success: true, requireOtp: true, message: 'OTP sent to email for login verification' });
   } catch (error: any) {
     console.error('Login error:', error);

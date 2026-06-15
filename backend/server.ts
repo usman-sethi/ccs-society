@@ -35,13 +35,13 @@ app.use(cors({
 }));
 
 // Setup DB connection middleware
-app.use(async (req, res, next) => {
+app.use('/api', async (req, res, next) => {
   try {
     await connectDB();
     next();
   } catch (error: any) {
     console.error('DB Connection Error:', error);
-    res.status(500).json({ success: false, message: 'Database connection failed', error: error.message || 'Unknown DB error' });
+    next();
   }
 });
 

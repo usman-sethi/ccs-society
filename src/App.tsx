@@ -105,13 +105,33 @@ const ProtectedLayout = ({ requireAdmin = false }: { requireAdmin?: boolean }) =
 };
 
 const PublicLayout = () => {
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+
   return (
-    <div className="min-h-screen mesh-bg text-[#EDEDED] flex flex-col selection:bg-indigo-500/30 overflow-x-hidden w-full">
-      <Navbar />
-      <main className="flex-1 w-full max-w-full overflow-x-hidden">
-        <Outlet />
-      </main>
-      <Footer />
+    <div className={`min-h-screen ${isAuthPage ? 'bg-[#050505]' : 'mesh-bg'} text-[#EDEDED] flex flex-col selection:bg-indigo-500/30 overflow-x-hidden w-full relative`}>
+      {isAuthPage && (
+        <div className="fixed inset-0 w-full h-full z-0 pointer-events-none overflow-hidden">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-50"
+          >
+            <source src="/bg-video.webm" type="video/webm" />
+            <source src="/bg-video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+      )}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-1 w-full max-w-full overflow-x-hidden relative flex flex-col">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };

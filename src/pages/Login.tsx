@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactPlayer from 'react-player';
 import { motion, AnimatePresence } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../lib/auth';
@@ -78,22 +79,11 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 relative z-10 w-full overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 relative w-full overflow-hidden">
       <Helmet>
         <title>Login | Core Computing Society</title>
         <meta name="description" content="Sign in to your Core Computing Society account." />
       </Helmet>
-
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline
-        className="fixed inset-0 w-full h-full object-cover -z-10 opacity-50 pointer-events-none"
-      >
-        <source src="/bg-video-galaxy.webm" type="video/webm" />
-        <source src="/bg-video.mp4" type="video/mp4" />
-      </video>
 
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.95 }}
