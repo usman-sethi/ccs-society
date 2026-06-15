@@ -102,14 +102,14 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1 bg-white/[0.02] border border-white/[0.05] rounded-full p-1 backdrop-blur-md shadow-inner">
+          <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-white/[0.02] border border-white/[0.05] rounded-full p-1 backdrop-blur-md shadow-inner overflow-x-auto no-scrollbar">
             {links.map((link) => {
               const isActive = location.pathname === link.path;
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`relative px-5 py-2 rounded-full text-[13px] font-medium transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                  className={`relative px-3 py-1.5 xl:px-5 xl:py-2 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 whitespace-nowrap ${
                     isActive
                       ? 'text-white'
                       : 'text-[#888888] hover:text-white hover:bg-white/[0.05]'
@@ -129,7 +129,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-4 shrink-0">
             {user ? (
               <div className="flex items-center gap-3">
                 <Link
