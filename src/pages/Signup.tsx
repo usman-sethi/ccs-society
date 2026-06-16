@@ -57,7 +57,12 @@ export default function Signup() {
         body: JSON.stringify({ name, email, password }),
       });
       
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (err) {
+        throw new Error('Server returned an invalid response. Please check server logs.');
+      }
       
       if (!response.ok) {
         throw new Error(data.error || data.message || 'Signup failed');
@@ -79,9 +84,9 @@ export default function Signup() {
     <div className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 relative w-full overflow-hidden">
       <div className="fixed inset-0 z-0">
         <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-          <source src="/video.webm" type="video/webm" />
+          <source src="/auth-bg.webm" type="video/webm" />
         </video>
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       <Helmet>
@@ -97,7 +102,7 @@ export default function Signup() {
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-purple-500/20 transition-colors duration-700" />
         
-        <div className="bg-transparent border border-white/20 backdrop-blur-lg rounded-[2rem] p-8 shadow-2xl z-10 relative">
+        <div className="bg-black/20 border border-white/10 backdrop-blur-md rounded-[2rem] p-8 shadow-2xl z-10 relative">
           <div className="text-center mb-8">
             <h2 className="text-[#EDEDED] font-bold text-2xl tracking-tight mb-2">Create Account</h2>
             <p className="text-[#888888] font-light text-sm">
