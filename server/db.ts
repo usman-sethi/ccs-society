@@ -11,6 +11,7 @@ export const connectDB = async () => {
   
   if (!cachedPromise) {
     mongoose.set('strictQuery', false);
+    mongoose.set('bufferCommands', false);
     console.log('Attempting to connect to MongoDB...', MONGODB_URI.replace(/:([^:@]{3,})@/, ':***@'));
     cachedPromise = mongoose.connect(MONGODB_URI, {
       serverSelectionTimeoutMS: 5000,
