@@ -36,6 +36,19 @@
     <title>Core Computing Society (CCS) - University of Peshawar</title>
   </head>
   <body>
+    <script>
+      // Emergency unregister service workers to clear broken cache
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          if (registrations.length > 0) {
+            for(let registration of registrations) {
+              registration.unregister();
+            }
+            window.location.reload();
+          }
+        }).catch(console.error);
+      }
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
