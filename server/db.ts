@@ -11,11 +11,11 @@ export const connectDB = async () => {
   
   if (!cachedPromise) {
     mongoose.set('strictQuery', false);
-    mongoose.set('bufferCommands', false);
+    console.log('Attempting to connect to MongoDB...', MONGODB_URI.replace(/:([^:@]{3,})@/, ':***@'));
     cachedPromise = mongoose.connect(MONGODB_URI, {
-      serverSelectionTimeoutMS: 3000, 
+      serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
-      bufferCommands: false,
+      connectTimeoutMS: 10000,
     }).then(mongooseInstance => {
       console.log('MongoDB connected successfully');
       return mongooseInstance;

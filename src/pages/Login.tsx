@@ -45,6 +45,13 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 relative w-full overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+          <source src="/video.webm" type="video/webm" />
+        </video>
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      </div>
+
       <Helmet>
         <title>Login | Core Computing Society</title>
         <meta name="description" content="Sign in to your Core Computing Society account." />
