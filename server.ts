@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import compression from 'compression';
+import cors from 'cors';
 import { connectDB } from './server/db';
 
 process.on('uncaughtException', (err) => {
@@ -29,6 +30,7 @@ import feedbackRouter from './server/routes/feedback';
 
 export const app = express();
 
+app.use(cors());
 app.use(compression());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -67,7 +69,7 @@ app.use('/api', (err: any, req: express.Request, res: express.Response, next: ex
 });
 
 async function startLocalServer() {
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== 'production') {
