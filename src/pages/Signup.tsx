@@ -57,11 +57,13 @@ export default function Signup() {
         body: JSON.stringify({ name, email, password }),
       });
       
+      const text = await response.text();
       let data;
       try {
-        data = await response.json();
+        data = JSON.parse(text);
       } catch (err) {
-        throw new Error('Server returned an invalid response. Please check server logs.');
+        console.error('Parse error on:', text);
+        throw new Error(`Invalid server response: ${text.substring(0, 50)}...`);
       }
       
       if (!response.ok) {
