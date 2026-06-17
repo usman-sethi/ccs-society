@@ -69,7 +69,7 @@ app.use('/api', (err: any, req: express.Request, res: express.Response, next: ex
 });
 
 async function startLocalServer() {
-  const PORT = process.env.PORT || 3000;
+  const PORT = 3000;
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== 'production') {
