@@ -14,7 +14,7 @@ export default function ManageTeams() {
 
   const fetchTeams = async () => {
     try {
-      const response = await fetch('/api/teams');
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/teams');
       if (response.ok) {
         const data = await response.json();
         setTeams(data);

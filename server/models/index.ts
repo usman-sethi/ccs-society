@@ -94,13 +94,6 @@ const feedbackSchema = new mongoose.Schema({
   approved_at: { type: Date }
 });
 
-const otpSchema = new mongoose.Schema({
-  email: { type: String, required: true },
-  code: { type: String, required: true },
-  expiresAt: { type: Date, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
-
 export const User = mongoose.model('User', userSchema);
 export const Event = mongoose.model('Event', eventSchema);
 export const EventRegistration = mongoose.model('EventRegistration', eventRegistrationSchema);
@@ -110,5 +103,4 @@ export const Query = mongoose.model('Query', querySchema);
 export const Announcement = mongoose.model('Announcement', announcementSchema);
 export const Developer = mongoose.model('Developer', developerSchema);
 export const Feedback = mongoose.model('Feedback', feedbackSchema);
-export const Otp = mongoose.model('Otp', otpSchema);
 

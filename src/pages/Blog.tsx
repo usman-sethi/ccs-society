@@ -13,7 +13,7 @@ export default function Blog() {
   
   const fetchBlogs = async () => {
     try {
-      const response = await fetch('/api/feedback/blog');
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/feedback/blog');
       const data = await response.json();
       if (data.success) {
         setFeedbacks(data.feedbacks);
@@ -118,7 +118,7 @@ function SubmitFeedbackModal({ isOpen, onClose, user }: { isOpen: boolean, onClo
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/feedback', {
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

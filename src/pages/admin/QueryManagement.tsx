@@ -13,7 +13,7 @@ export default function QueryManagement() {
 
   const fetchQueries = async () => {
     try {
-      const response = await fetch('/api/queries', {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/queries', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }

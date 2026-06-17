@@ -26,8 +26,8 @@ export default function Teams() {
     const fetchData = async () => {
       try {
         const [teamsRes, membersRes] = await Promise.all([
-          fetch('/api/teams'),
-          fetch('/api/members')
+          fetch((import.meta.env.VITE_API_URL || '') + '/api/teams'),
+          fetch((import.meta.env.VITE_API_URL || '') + '/api/members')
         ]);
         
         if (teamsRes.ok) {

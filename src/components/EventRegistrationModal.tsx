@@ -48,7 +48,7 @@ export default function EventRegistrationModal({ isOpen, onClose, event }: Event
         // Fetch latest status from server
         const fetchStatus = async () => {
           try {
-            const response = await fetch('/api/event-registrations');
+            const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/event-registrations');
             if (response.ok) {
               const registrations = await response.json();
               const currentReg = registrations.find((r: any) => (r._id || r.id) === regId);
@@ -104,7 +104,7 @@ export default function EventRegistrationModal({ isOpen, onClose, event }: Event
     setLoading(true);
     try {
       const eventId = event._id || event.id;
-      const response = await fetch('/api/event-registrations', {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/event-registrations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

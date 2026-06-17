@@ -12,7 +12,7 @@ export default function Announcements() {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await fetch('/api/announcements');
+        const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/announcements');
         if (response.ok) {
           const data = await response.json();
           setAnnouncements(data);

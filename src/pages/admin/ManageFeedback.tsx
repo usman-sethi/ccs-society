@@ -9,7 +9,7 @@ export default function ManageFeedback() {
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await fetch('/api/feedback/admin');
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/feedback/admin');
       const data = await response.json();
       if (data.success) {
         setFeedbacks(data.feedbacks);

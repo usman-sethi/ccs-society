@@ -12,6 +12,7 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('Creating Account...');
   
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -48,8 +49,14 @@ export default function Signup() {
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setLoadingMessage('Creating Account...');
+    
+    const slowServerTimeout = setTimeout(() => {
+      setLoadingMessage('Waking up server, this might take up to a minute...');
+    }, 5000);
+    
     try {
-      const response = await fetch('/api/auth/signup', {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,6 +64,7 @@ export default function Signup() {
         body: JSON.stringify({ name, email, password }),
       });
       
+      clearTimeout(slowServerTimeout);
       const text = await response.text();
       let data;
       try {
@@ -172,7 +180,7 @@ export default function Signup() {
               disabled={loading}
               className="w-full mt-6 bg-[#EDEDED] hover:bg-white text-[#0A0A0A] font-medium py-3 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {loading ? 'Creating Account...' : 'Continue'}
+              {loading ? loadingMessage : 'Continue'}
             </button>
           </form>
           

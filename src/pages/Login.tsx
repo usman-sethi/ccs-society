@@ -9,6 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('Signing in...');
   
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -16,8 +17,15 @@ export default function Login() {
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setLoadingMessage('Signing in...');
+    
+    // Set a timeout to show a message if the server is taking a while to wake up
+    const slowServerTimeout = setTimeout(() => {
+      setLoadingMessage('Waking up server, this might take up to a minute...');
+    }, 5000);
+    
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,6 +33,7 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
       
+      clearTimeout(slowServerTimeout);
       const text = await response.text();
       let data;
       try {
@@ -108,7 +117,7 @@ export default function Login() {
               disabled={loading}
               className="w-full mt-6 bg-[#EDEDED] hover:bg-white text-[#0A0A0A] font-medium py-3 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? loadingMessage : 'Sign In'}
             </button>
           </form>
           

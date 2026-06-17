@@ -14,7 +14,7 @@ export default function ManageUsers() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('/api/users', {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/users', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }

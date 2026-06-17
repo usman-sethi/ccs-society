@@ -49,7 +49,7 @@ export default function AdminDashboard() {
     setShowMigrateConfirm(false);
     setIsMigrating(true);
     try {
-      const res = await fetch('/api/migrate', { method: 'POST' });
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/migrate', { method: 'POST' });
       const data = await res.json();
       
       if (data.success) {

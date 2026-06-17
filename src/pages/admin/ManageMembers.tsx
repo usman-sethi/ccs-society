@@ -18,8 +18,8 @@ export default function ManageMembers() {
   const fetchData = async () => {
     try {
       const [membersRes, teamsRes] = await Promise.all([
-        fetch('/api/members'),
-        fetch('/api/teams')
+        fetch((import.meta.env.VITE_API_URL || '') + '/api/members'),
+        fetch((import.meta.env.VITE_API_URL || '') + '/api/teams')
       ]);
 
       if (!membersRes.ok || !teamsRes.ok) {

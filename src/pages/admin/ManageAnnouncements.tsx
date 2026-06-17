@@ -17,7 +17,7 @@ export default function ManageAnnouncements() {
 
   const fetchAnnouncements = async () => {
     try {
-      const response = await fetch('/api/announcements');
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/announcements');
       if (response.ok) {
         const data = await response.json();
         setAnnouncements(data);
@@ -76,7 +76,7 @@ export default function ManageAnnouncements() {
         if (!response.ok) throw new Error('Failed to update announcement');
         toast.success('Announcement updated successfully');
       } else {
-        const response = await fetch('/api/announcements', {
+        const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/announcements', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

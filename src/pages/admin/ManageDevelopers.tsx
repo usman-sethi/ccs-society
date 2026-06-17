@@ -41,7 +41,7 @@ export default function ManageDevelopers() {
 
   const fetchDevelopers = async () => {
     try {
-      const res = await fetch('/api/developers');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/developers');
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
       if (Array.isArray(data)) {

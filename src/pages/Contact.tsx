@@ -32,7 +32,7 @@ export default function Contact() {
 
     setStatus('submitting');
     try {
-      const response = await fetch('/api/queries', {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/queries', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

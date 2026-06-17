@@ -15,8 +15,8 @@ export default function ManageRegistrations() {
   const fetchData = async () => {
     try {
       const [eventsRes, registrationsRes] = await Promise.all([
-        fetch('/api/events'),
-        fetch('/api/event-registrations', {
+        fetch((import.meta.env.VITE_API_URL || '') + '/api/events'),
+        fetch((import.meta.env.VITE_API_URL || '') + '/api/event-registrations', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }

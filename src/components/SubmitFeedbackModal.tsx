@@ -27,7 +27,7 @@ export default function SubmitFeedbackModal({ isOpen, onClose, user }: { isOpen:
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/feedback', {
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
